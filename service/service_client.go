@@ -7,7 +7,7 @@ import (
 )
 
 type serviceClient interface {
-    SendCommand(httpVerb, urlRoute string, body io.Reader) *http.Response
+    SendCommand(httpVerb, urlRoute string, body io.Reader, header http.Header) *http.Response
 }
 
 //ServiceWebClient allows communication to registry
@@ -16,12 +16,12 @@ type ServiceWebClient struct {
 }
 
 //SendCommand sends the command to the designated service
-func (client ServiceWebClient) SendCommand(httpVerb, urlRoute string, body io.Reader) *http.Response {
+func (client ServiceWebClient) SendCommand(httpVerb, urlRoute string, body io.Reader, header http.Header) *http.Response {
     httpclient := &http.Client{}
 
-    url := fmt.Sprintf("%s/%s", client.URL, urlRoute)
+    url := fmt.Sprintf("http://%s/%s", client.URL, urlRoute)
     req, _ := http.NewRequest(httpVerb, url, body)
-
+    req.Header = header
     resp, err := httpclient.Do(req)
 
     if err != nil {
