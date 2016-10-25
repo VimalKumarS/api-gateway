@@ -1,0 +1,9 @@
+package: github.com/mattmac4241/api-gateway
+import:
+- package: github.com/garyburd/redigo
+  subpackages:
+  - redis
+- package: github.com/gorilla/mux
+- package: github.com/joho/godotenv
+- package: github.com/unrolled/render
+- package: github.com/urfave/negroni
